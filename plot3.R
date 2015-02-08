@@ -1,0 +1,12 @@
+
+library("lattice")
+library("graphics")
+alldata <- read.csv('household_power_consumption.txt',header=TRUE,sep=';')
+df <- subset(alldata, Date == '1/2/2007' | Date == '2/2/2007')
+png("plot3.png", width=480, height=480, units="px")
+dateTime <- as.POSIXlt(paste(as.Date(df$Date, format="%d/%m/%Y"), df$Time, sep=" "))
+plot(dateTime, as.numeric(as.character(df$Sub_metering_1)), type="l", xlab="", ylab="Energy sub metering")
+lines(dateTime,as.numeric(as.character(df$Sub_metering_2)),col='red')
+lines(dateTime,as.numeric(as.character(df$Sub_metering_3)),col='blue')
+legend("topright",names(df)[7:9],lty=1,col = c("black","red","blue"))
+dev.off()
